@@ -19,6 +19,10 @@ module.exports = {
         'green-haze': '#09A65A',
         'totem-pole': '#900A0A',
         'ship-gray': '#3A393F',
+        'woodsmoke': '#17171A',
+      },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
       }
     }
   },
