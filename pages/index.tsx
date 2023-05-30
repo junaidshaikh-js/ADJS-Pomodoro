@@ -88,7 +88,7 @@ export default function Home() {
 
   const renderIcon = () => {
     if (start) return null
-    
+
     return (
       <div className="absolute bottom-[10%] text-[#585858]">
         {!completed ? (
@@ -126,7 +126,7 @@ export default function Home() {
                 cx="259"
                 cy="259"
                 r="254"
-                stroke-width="9"
+                strokeWidth="9"
                 stroke={completed ? 'green' : 'red'}
                 fill="transparent"
               />
