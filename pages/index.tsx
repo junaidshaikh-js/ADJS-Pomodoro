@@ -1,17 +1,17 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import Image from 'next/image'
 
 import GearIcon from '../public/gear.svg'
 
-const MINUTES_START = '15'
-const SECONDS_START = '00'
+const MINUTES_START = '01'
+const SECONDS_START = '05'
 
 export default function Home() {
   const [minutes, setMinutes] = useState(MINUTES_START)
   const [seconds, setSeconds] = useState(SECONDS_START)
   const [disabled, setDisabled] = useState(true)
   const [start, setStart] = useState(false)
-  const [intervalId, setIntervalId] = useState<NodeJS.Timer>()
+  const timerIdRef = useRef<NodeJS.Timer>()
 
   const handleMinuteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
@@ -35,33 +35,25 @@ export default function Home() {
       }
       return String(value)
     }
-
+    let sec = +seconds
+    let min = +minutes
     const id = setInterval(() => {
-      const changeMinute = () => {
-        setMinutes(m => {
-          let minute = +m - 1
+      sec -= 1
 
-          if (minute === 0) {
-            // timer is over
-          }
+      if (sec === -1) {
+        sec = 59
+        min -= 1
 
-          return formatValue(minute)
-        })
+        if (min === -1) {
+          clearInterval(timerIdRef.current)
+          return
+        }
       }
 
-      setSeconds(s => {
-        let second = +s - 1
-
-        if (second < 0) {
-          second = 59
-          changeMinute()
-        }
-
-        return String(formatValue(second))
-      })
+      setSeconds(formatValue(sec))
+      setMinutes(formatValue(min))
     }, 1000)
-
-    setIntervalId(id)
+    timerIdRef.current = id
   }
 
   return (
@@ -91,16 +83,16 @@ export default function Home() {
             role="button"
           >
             {!start ? (
-              <span
-                onClick={handleStart}
-              >
-                START
-              </span>
+              <span onClick={handleStart}>START</span>
             ) : (
-              <span onClick={() => {
-                clearInterval(intervalId)
-                setStart(!start)
-              }}>STOP</span>
+              <span
+                onClick={() => {
+                  clearInterval(timerIdRef.current)
+                  setStart(!start)
+                }}
+              >
+                STOP
+              </span>
             )}
           </div>
 
