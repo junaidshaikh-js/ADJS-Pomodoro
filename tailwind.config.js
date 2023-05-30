@@ -23,6 +23,9 @@ module.exports = {
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+      },
+      boxShadow: {
+        'outer-glow': '-5px 14px 44px #000000, 5px -16px 50px rgba(255, 255, 255, 0.15)',
       }
     }
   },
